@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public enum OperatorSymbol {
     SEPARATE;
 
     public static Map<String, OperatorSymbol> comparatorSymbols() {
-        Map<String, OperatorSymbol> map = new HashMap<>();
+        Map<String, OperatorSymbol> map = new HashMap();
         map.put("==", EQ);
         map.put("!=", NEQ);
         map.put(">", GT);
@@ -35,14 +35,14 @@ public enum OperatorSymbol {
     }
 
     public static Map<String, OperatorSymbol> logicalSymbols() {
-        Map<String, OperatorSymbol> map = new HashMap<>();
+        Map<String, OperatorSymbol> map = new HashMap();
         map.put("&&", AND);
         map.put("||", OR);
         return Collections.unmodifiableMap(map);
     }
 
     public static Map<String, OperatorSymbol> separatorSymbols() {
-        Map<String, OperatorSymbol> map = new HashMap<>();
+        Map<String, OperatorSymbol> map = new HashMap();
         map.put(",", SEPARATE);
         return Collections.unmodifiableMap(map);
     }

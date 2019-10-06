@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,12 +8,12 @@ public class LexerState {
     boolean isEOF;
     boolean isNullable;
     TokenKind kind;
-    List<TokenKind> validNextKinds = new ArrayList<>();
+    List<TokenKind> validNextKinds = new ArrayList();
 
 
     public static List<LexerState> getKinds() {
 
-        List<LexerState> states = new ArrayList<>();
+        List<LexerState> states = new ArrayList();
 
         LexerState unknown = new LexerState();
         unknown.kind = TokenKind.UNKNOWN;
@@ -101,7 +101,7 @@ public class LexerState {
         return false;
     }
 
-    public static void checkExpressionSyntax(List<ExpressionToken> tokens) throws MyException {
+    public static void checkExpressionSyntax(List<ExpressionToken> tokens) throws JValuateException {
 
 
         ExpressionToken lastToken = null;
@@ -113,16 +113,16 @@ public class LexerState {
 
                 // call out a specific error for tokens looking like they want to be functions.
                 if (lastToken.kind.name() == TokenKind.VARIABLE.name() && token.kind.name() == TokenKind.CLAUSE_CLOSE.name()) {
-                    throw new MyException("Undefined function " + (String) lastToken.value, "JValuateException");
+                    throw new JValuateException("Undefined function " + (String) lastToken.value, "JValuateException");
                 }
 
-                throw new MyException("Cannot transition token types from", "JValuateException");
+                throw new JValuateException("Cannot transition token types from", "JValuateException");
             }
 
             state = getLexerStateForToken(token.kind);
 
             if (!state.isNullable && token.value == null) {
-                throw new MyException("Token kind " + token.kind.name() + "cannot have a nil value", "JValuateException");
+                throw new JValuateException("Token kind " + token.kind.name() + "cannot have a nil value", "JValuateException");
             }
 
             lastToken = token;
@@ -130,12 +130,12 @@ public class LexerState {
 
 
         if (!state.isEOF) {
-            throw new MyException("Unexpected end of expression", "JValuateException");
+            throw new JValuateException("Unexpected end of expression", "JValuateException");
         }
 
     }
 
-    public static LexerState getLexerStateForToken(TokenKind kind) throws MyException {
+    public static LexerState getLexerStateForToken(TokenKind kind) throws JValuateException {
 
         for (LexerState state : getKinds()) {
             if (state.kind.name() == kind.name()) {
@@ -143,7 +143,7 @@ public class LexerState {
             }
         }
 
-        throw new MyException("No lexer state found for token kind" + kind.name(), "JValuateException");
+        throw new JValuateException("No lexer state found for token kind" + kind.name(), "JValuateException");
     }
 
 

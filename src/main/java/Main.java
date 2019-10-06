@@ -1,7 +1,7 @@
-import src.EvaluateExpression;
-import src.ExpressionToken;
-import src.MyException;
-import src.TokenKind;
+import com.jvaluate.EvaluateExpression;
+import com.jvaluate.ExpressionToken;
+import com.jvaluate.JValuateException;
+import com.jvaluate.TokenKind;
 
 public class Main {
 
@@ -19,7 +19,7 @@ public class Main {
             }
 
             System.out.println(evaluateExpression.ToSQLQuery());
-        }catch (MyException e){
+        }catch (JValuateException e){
             e.printStackTrace();
         }
     }

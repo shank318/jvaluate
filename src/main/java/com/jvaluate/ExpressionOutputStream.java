@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ public class ExpressionOutputStream {
     List<String> transactions;
 
     public ExpressionOutputStream() {
-        this.transactions = new ArrayList<>();
+        this.transactions = new ArrayList();
     }
 
 

@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,7 +11,7 @@ public class EvaluateExpression {
     String inputExpression;
     List<ExpressionToken> tokens;
 
-    public EvaluateExpression(String expression) throws MyException {
+    public EvaluateExpression(String expression) throws JValuateException {
         this.queryDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
         this.inputExpression = expression;
 
@@ -28,7 +28,7 @@ public class EvaluateExpression {
     }
 
 
-    public String ToSQLQuery() throws MyException {
+    public String ToSQLQuery() throws JValuateException {
 
         TokenStream tokenStream = new TokenStream(this.tokens);
         ExpressionOutputStream transactions = new ExpressionOutputStream();
@@ -51,7 +51,7 @@ public class EvaluateExpression {
         return number.replaceAll("\\.?0*$", "");
     }
 
-    private String findNextSQLString(TokenStream stream, ExpressionOutputStream transactions) throws MyException {
+    private String findNextSQLString(TokenStream stream, ExpressionOutputStream transactions) throws JValuateException {
 
         ExpressionToken token;
         String ret = "";
@@ -111,7 +111,7 @@ public class EvaluateExpression {
                 break;
 
             default:
-                throw new MyException("Unrecognized query token " + token.value + " of kind " + token.kind, "JValuateException");
+                throw new JValuateException("Unrecognized query token " + token.value + " of kind " + token.kind, "JValuateException");
         }
 
         return ret;

@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,8 +11,8 @@ import java.util.List;
 public class Parsing {
 
 
-    public static List<ExpressionToken> parseTokens(String expression) throws MyException {
-        List<ExpressionToken> tokens = new ArrayList<>();
+    public static List<ExpressionToken> parseTokens(String expression) throws JValuateException {
+        List<ExpressionToken> tokens = new ArrayList();
         LexerStream lexerStream = new LexerStream(expression);
         LexerState lexerState = new LexerState();
         lexerState = lexerState.getKinds().get(0);
@@ -39,7 +39,7 @@ public class Parsing {
     }
 
 
-    private static ReadTokenResult readToken(LexerStream stream, LexerState state) throws MyException {
+    private static ReadTokenResult readToken(LexerStream stream, LexerState state) throws JValuateException {
 
         ExpressionToken ret = new ExpressionToken();
         Object tokenValue = null;
@@ -86,7 +86,7 @@ public class Parsing {
                 try {
                     tokenValue = Float.parseFloat(tokenString);
                 } catch (NumberFormatException e) {
-                    throw new MyException("Unable to parse numeric value to float", "JValuateException");
+                    throw new JValuateException("Unable to parse numeric value to float", "JValuateException");
                 }
 
                 kind = TokenKind.NUMERIC;
@@ -108,7 +108,7 @@ public class Parsing {
                 kind = TokenKind.VARIABLE;
 
                 if (!readUntilFalseResult.isCorrect) {
-                    throw new MyException("Unclosed parameter bracket", "JValuateException");
+                    throw new JValuateException("Unclosed parameter bracket", "JValuateException");
                 }
 
                 // above method normally rewinds us to the closing bracket, which we want to skip.
@@ -138,7 +138,7 @@ public class Parsing {
                 readUntilFalseResult = readUntilFalse(stream, true, false, true, "nq");
                 tokenValue = readUntilFalseResult.buffer;
                 if (!readUntilFalseResult.isCorrect) {
-                    throw new MyException("Unclosed string literal", "JValuateException");
+                    throw new JValuateException("Unclosed string literal", "JValuateException");
                 }
 
                 // advance the stream one position, since reading until false assumes the terminator is a real token
@@ -185,7 +185,7 @@ public class Parsing {
                 break;
             }
 
-            throw new MyException("Invalid token " + tokenString, "JValuateException");
+            throw new JValuateException("Invalid token " + tokenString, "JValuateException");
         }
 
         ret.kind = kind;
@@ -251,7 +251,7 @@ public class Parsing {
     /*
 	Checks the balance of tokens which have multiple parts, such as parenthesis.
 */
-    public static void checkBalance(List<ExpressionToken> tokens) throws MyException {
+    public static void checkBalance(List<ExpressionToken> tokens) throws JValuateException {
 
         ExpressionToken token;
         int parens = 0;
@@ -272,7 +272,7 @@ public class Parsing {
         }
 
         if (parens != 0) {
-            throw new MyException("Unbalanced parenthesis", "JValuateException");
+            throw new JValuateException("Unbalanced parenthesis", "JValuateException");
         }
     }
 

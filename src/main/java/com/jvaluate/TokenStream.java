@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 import java.util.List;
 

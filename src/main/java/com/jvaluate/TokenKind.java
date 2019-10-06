@@ -1,4 +1,4 @@
-package src;
+package com.jvaluate;
 
 public enum TokenKind {
     UNKNOWN,
