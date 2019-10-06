@@ -118,7 +118,7 @@ public class Parsing {
                 break;
             }
 
-            // regular variable - or function?
+            // regular variable
             if (Character.isLetter(character)) {
                 tokenString = readTokenUntilFalse(stream, "v");
 
