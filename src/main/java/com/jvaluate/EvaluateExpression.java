@@ -2,6 +2,7 @@ package com.jvaluate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +11,10 @@ public class EvaluateExpression {
     boolean checkTypes;
     String inputExpression;
     List<ExpressionToken> tokens;
+    List<String> dateColumns = Arrays.asList("date","created_at","updated_at");
 
     public EvaluateExpression(String expression) throws JValuateException {
-        this.queryDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
+        this.queryDateFormat = "yyyy-MM-dd";
         this.inputExpression = expression;
 
         final List<ExpressionToken> expressionTokens = Parsing.parseTokens(expression);
@@ -51,6 +53,20 @@ public class EvaluateExpression {
         return number.replaceAll("\\.?0*$", "");
     }
 
+//    private  boolean isSimpleDate(String d) {
+//        if (d != null) {
+//            for (String parse : formats) {
+//                SimpleDateFormat sdf = new SimpleDateFormat(parse);
+//                try {
+//                    sdf.parse(d);
+//                    System.out.println("Printing the value of " + parse);
+//                } catch (ParseException e) {
+//
+//                }
+//            }
+//        }
+//    }
+
     private String findNextSQLString(TokenStream stream, ExpressionOutputStream transactions) throws JValuateException {
 
         ExpressionToken token;
@@ -80,7 +96,12 @@ public class EvaluateExpression {
                 break;
 
             case VARIABLE:
-                ret = "["+(String) token.value+"]";
+                String value = (String) token.value;
+                if(dateColumns.contains(value)){
+                    ret = "DATE(`"+value+"`)";
+                }else{
+                    ret = "["+value+"]";
+                }
                 break;
 
             case NUMERIC:

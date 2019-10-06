@@ -69,7 +69,7 @@ public class LexerState {
         comparator.kind = TokenKind.COMPARATOR;
         comparator.isEOF = false;
         comparator.isNullable = false;
-        comparator.validNextKinds = Arrays.asList(TokenKind.NUMERIC, TokenKind.VARIABLE, TokenKind.STRING, TokenKind.TIME, TokenKind.CLAUSE, TokenKind.CLAUSE_CLOSE);
+        comparator.validNextKinds = Arrays.asList(TokenKind.NUMERIC, TokenKind.VARIABLE, TokenKind.STRING, TokenKind.TIME, TokenKind.CLAUSE);
         states.add(comparator);
 
         LexerState logical = new LexerState();
@@ -90,7 +90,6 @@ public class LexerState {
     }
 
     private static boolean canTransitionTo(LexerState state, TokenKind kind) {
-
 
         for (TokenKind k : state.validNextKinds) {
             if (k.name() == kind.name()) {
@@ -116,7 +115,7 @@ public class LexerState {
                     throw new JValuateException("Undefined function " + (String) lastToken.value, "JValuateException");
                 }
 
-                throw new JValuateException("Cannot transition token types from", "JValuateException");
+                throw new JValuateException("Invalid expression", "JValuateException");
             }
 
             state = getLexerStateForToken(token.kind);

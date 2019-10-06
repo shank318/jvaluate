@@ -287,11 +287,7 @@ public class Parsing {
         parseTimeResult.time = new Date();
         parseTimeResult.isCorrect = false;
 
-        List<String> formats = Arrays.asList("yyyy-MM-dd",                         // RFC 3339
-                "yyyy-MM-dd hh:mm",                   // RFC 3339 with minutes
-                "yyyy-MM-dd hh:mm aaa"               // RFC 3339 with seconds
-               );
-
+        List<String> formats = Arrays.asList("yyyy-MM-dd" );                        // RFC 333);
 
         for (String format : formats) {
 
