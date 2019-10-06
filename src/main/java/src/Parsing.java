@@ -13,10 +13,8 @@ public class Parsing {
 
     public static List<ExpressionToken> parseTokens(String expression) throws MyException {
         List<ExpressionToken> tokens = new ArrayList<>();
-        ExpressionToken token = new ExpressionToken();
         LexerStream lexerStream = new LexerStream(expression);
         LexerState lexerState = new LexerState();
-        boolean found;
         lexerState = lexerState.getKinds().get(0);
 
         for (; lexerStream.canRead(); ) {
@@ -172,7 +170,6 @@ public class Parsing {
             // must be a known symbol
             tokenString = readTokenUntilFalse(stream, "nln");
             tokenValue = tokenString;
-            System.out.println(tokenString);
             OperatorSymbol symbol = OperatorSymbol.logicalSymbols().get(tokenString);
 
             if (symbol != null) {
